@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - ${APP_PORT}:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: dbuser
+      WORDPRESS_DB_PASSWORD: ${PASSWORD}
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - ${VOL_WRDPR}:/var/www/html
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: ${PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - ${VOL_DB}:/var/lib/mysql
